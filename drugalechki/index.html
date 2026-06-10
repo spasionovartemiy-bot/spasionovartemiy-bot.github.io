@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Drugalechki ✦ клуб для своих</title>
+<meta name="description" content="Закрытая лента для близкого круга." />
+<meta property="og:title" content="Drugalechki" />
+<meta property="og:description" content="Закрытая лента для своих. Залетай." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{ --coral:#FF8A6B; --lilac:#B79CFF; }
+  *{margin:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    font-family:'Manrope',system-ui,sans-serif; color:#F1ECF6; background:#171327;
+    display:grid; place-items:center; min-height:100vh; padding:24px; overflow:hidden; text-align:center;
+  }
+  .bg{position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(60% 50% at 18% 0%, rgba(183,156,255,.20), transparent 70%),
+      radial-gradient(55% 45% at 100% 12%, rgba(255,138,107,.18), transparent 70%),
+      radial-gradient(70% 60% at 50% 110%, rgba(95,208,197,.12), transparent 70%);}
+  .card{position:relative; z-index:1; max-width:360px;}
+  .spark{font-size:40px; color:var(--coral); filter:drop-shadow(0 0 14px var(--coral));
+    animation:tw 3s ease-in-out infinite; display:block; margin-bottom:14px;}
+  @keyframes tw{0%,100%{opacity:.7;transform:scale(1);}50%{opacity:1;transform:scale(1.15);}}
+  h1{font-family:'Unbounded',sans-serif; font-weight:800; font-size:34px; letter-spacing:-1px; margin-bottom:8px;}
+  p{color:#9a90b0; font-size:15px; line-height:1.5; margin-bottom:26px;}
+  a.go{display:inline-block; text-decoration:none; font-weight:800; font-size:16px; padding:14px 34px;
+    border-radius:14px; color:#1a142a; background:linear-gradient(135deg,var(--coral),#ff6f9a);
+    box-shadow:0 8px 26px rgba(255,138,107,.35); transition:transform .2s;}
+  a.go:hover{transform:translateY(-2px);}
+  .small{margin-top:18px; font-size:12px; color:#7a7090;}
+  @media (prefers-reduced-motion:reduce){ .spark{animation:none;} a.go{transition:none;} }
+</style>
+<script>
+  var TARGET = "https://claude.ai/public/artifacts/496cd1f6-28af-4bf0-9588-a772577c6e2a";
+  // мягкий авторедирект, чтобы успела показаться заставка
+  setTimeout(function(){ window.location.replace(TARGET); }, 1400);
+</script>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="card">
+    <span class="spark">✦</span>
+    <h1>Drugalechki</h1>
+    <p>Закрытая лента для своих. Сейчас закинем тебя внутрь…</p>
+    <a class="go" href="https://claude.ai/public/artifacts/496cd1f6-28af-4bf0-9588-a772577c6e2a">Зайти к своим</a>
+    <div class="small">если не открылось само — жми кнопку</div>
+  </div>
+</body>
+</html>
