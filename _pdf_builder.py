@@ -40,7 +40,7 @@ a { color: #c2410c; text-decoration: none; }
            margin: 1mm 0 0 0; line-height: 1.05; }
 .head .role { font-size: 10.5pt; color: #c2410c; font-weight: bold; margin: 1.5mm 0 0 0; }
 .head .where { font-size: 8.2pt; color: #6e6e6e; margin: 1.5mm 0 0 0; }
-.clearfix::after { content: ""; display: block; clear: both; }
+.clearfix::after { content: ""; display: block; clear: left; }
 
 .side { float: left; width: 52mm; padding-right: 7mm; border-right: 0.5pt solid #e2e2e2; }
 .main { margin-left: 59mm; }
@@ -72,6 +72,7 @@ h2 { font-size: 7.2pt; text-transform: uppercase; letter-spacing: 1.2pt;
 
 .job { margin-bottom: %(job).1fmm; page-break-inside: avoid; }
 .job-top { margin-bottom: 0.6mm; }
+.job-top::after { content: ""; display: block; clear: right; }
 .job-dates { float: right; font-size: 7.6pt; color: #8a8a8a; padding-top: 0.8mm; }
 .job-title { font-weight: bold; font-size: 9.6pt; }
 .job-co { color: #c2410c; font-weight: bold; }
@@ -146,16 +147,16 @@ EDU = [
 
 
 # шаги уплотнения для автоподбора под одну страницу
-def _step(fs, lh, pad, h1, ph, sec, lede, job, key, bul=3, chips=8, keymax=200):
+def _step(fs, lh, pad, h1, ph, sec, lede, job, key, bul=4, chips=8, keymax=240):
     return {"fs": fs, "lh": lh, "pad": pad, "h1": h1, "ph": ph,
             "phr": ph / 2, "sec": sec, "lede": lede, "job": job, "key": key,
             "_bul": bul, "_chips": chips, "_keymax": keymax}
 
 
 STEPS = [
-    _step(8.10, 1.36, 7.0, 19.0, 27.0, 4.4, 8.6, 3.6, 2.0, bul=3, chips=8, keymax=200),
-    _step(7.90, 1.33, 6.4, 18.0, 26.0, 3.9, 8.3, 3.2, 1.8, bul=3, chips=6, keymax=180),
-    _step(7.60, 1.30, 5.8, 17.0, 24.0, 3.4, 8.0, 2.8, 1.6, bul=3, chips=5, keymax=160),
+    _step(8.10, 1.36, 7.0, 19.0, 27.0, 4.4, 8.6, 3.6, 2.0, bul=5, chips=8, keymax=260),
+    _step(7.90, 1.33, 6.4, 18.0, 26.0, 3.9, 8.3, 3.2, 1.8, bul=4, chips=7, keymax=200),
+    _step(7.60, 1.30, 5.8, 17.0, 24.0, 3.4, 8.0, 2.8, 1.6, bul=3, chips=6, keymax=170),
     _step(7.40, 1.27, 5.2, 16.0, 23.0, 3.0, 7.7, 2.5, 1.4, bul=2, chips=5, keymax=150),
     _step(7.10, 1.24, 4.6, 15.0, 21.0, 2.6, 7.4, 2.2, 1.2, bul=2, chips=4, keymax=130),
     _step(6.80, 1.21, 4.0, 14.0, 20.0, 2.2, 7.1, 1.9, 1.0, bul=2, chips=4, keymax=110),
@@ -206,7 +207,7 @@ def _compose(role, company, content, web_url, fit_title, st):
         bullets = "".join("<li>%s</li>" % _esc(b) for b in j["bullets"][:st["_bul"]])
         jobs_html.append("""
       <div class="job">
-        <div class="job-top clearfix">
+        <div class="job-top">
           <span class="job-dates">%s</span>
           <span class="job-title">%s</span> ·
           <span class="job-co">%s</span>
