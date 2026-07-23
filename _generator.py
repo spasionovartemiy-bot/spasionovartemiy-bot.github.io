@@ -309,7 +309,7 @@ def slugify(text: str, maxlen: int = 48) -> str:
 
 
 def generate(vacancy_row, jd: str) -> tuple:
-    """Возвращает (filename, html, cover_letter)."""
+    """Возвращает (filename, html, cover_letter, content, slug)."""
     title = vacancy_row["title"]
     company = vacancy_row["company"] or ""
     salary = vacancy_row["salary_raw"] or ""
@@ -318,5 +318,6 @@ def generate(vacancy_row, jd: str) -> tuple:
     content = generate_content(title, company, salary, jd)
     page = build_html(base, title, company, content)
 
-    filename = slugify(f"{title}-{company}" if company else title) + ".html"
-    return filename, page, str(content.get("cover_letter", "")).strip()
+    slug = slugify(f"{title}-{company}" if company else title)
+    filename = slug + ".html"
+    return filename, page, str(content.get("cover_letter", "")).strip(), content, slug
