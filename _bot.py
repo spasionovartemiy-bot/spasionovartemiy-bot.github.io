@@ -3,7 +3,7 @@ import logging
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
-from aiogram.types import (CallbackQuery, InlineKeyboardButton,
+from aiogram.types import (CallbackQuery, FSInputFile, InlineKeyboardButton,
                            InlineKeyboardMarkup, Message)
 
 import db
@@ -80,7 +80,8 @@ async def run_generation(uid: str, status_msg: Message):
         note = "по тексту вакансии" if jd else "по названию (описание не открылось)"
         await status_msg.edit_text(
             f"⏳ <b>{title}</b>\nСобираю резюме {note}…", parse_mode="HTML")
-        filename, page, letter = await asyncio.to_thread(generate, v, jd)
+        filename, page, letter, content, slug = await asyncio.to_thread(
+            generate, v, jd)
 
         await status_msg.edit_text(
             f"⏳ <b>{title}</b>\nПубликую страницу…", parse_mode="HTML")
@@ -101,6 +102,22 @@ async def run_generation(uid: str, status_msg: Message):
             parse_mode="HTML",
             disable_web_page_preview=True,
         )
+
+        # PDF — локальный рендеринг, запросов к модели не делает
+        try:
+            from pdf_builder import build_pdf, pdf_filename
+            import os
+            pdf_path = os.path.join("/tmp", pdf_filename(slug))
+            await asyncio.to_thread(build_pdf, pdf_path, title,
+                                    v["company"] or "", content, url)
+            await bot.send_document(
+                OWNER_ID, FSInputFile(pdf_path),
+                caption=f"PDF-версия — {title}")
+            os.remove(pdf_path)
+        except Exception as e:
+            log.exception("PDF не собрался")
+            await bot.send_message(
+                OWNER_ID, f"⚠️ PDF не собрался: {str(e)[:200]}\nСсылка выше рабочая.")
 
         if letter:
             tail = f'\n\n📄 Резюме: {url}'
